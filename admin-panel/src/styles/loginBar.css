@@ -1,0 +1,89 @@
+.login-bar {
+  position: absolute;
+  margin-top: 120%;
+  padding: 30px;
+}
+
+.username-input {
+  margin-bottom: 20px;
+  -webkit-border-radius: 10%;
+  -moz-border-radius: 10%;
+  border-radius: 10%;
+}
+
+.text {
+  position: absolute;
+  margin-top: 100%;
+  margin-left: 50px;
+  font-weight: bolder;
+  font-family: FreeSerif;
+  font-size: 20px;
+
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+
+  position: relative;
+  margin: 1px auto;
+}
+
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #333;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+    }
+}
+
+.login-page-error {
+  background-color: khaki;
+  font-size: 20px;
+  border-radius: 10%;
+  margin-bottom: 20px;
+
+}
+
+.password-input {
+  margin-bottom: 20px;
+  border-radius: 10%;
+}
+
+.login-button {
+  background-color: darkgray;
+  color: blueviolet;
+  text-align: center;
+  padding: 5px 63px 5px 50px;
+  border: none;
+}
+
+body {
+  background-color: aliceblue;
+}
