@@ -1,10 +1,18 @@
 import { combineReducers } from 'redux';
 import loginForm from './loginForm'
 import authorizedUser from './authorizedUser'
+import devices from './devices'
+import users from './users'
+import controls from './controls'
+import pages from './pages'
 
 
 export default combineReducers({
   loginForm,
-  authorizedUser
+  authorizedUser,
+  devices,
+  users,
+  controls,
+  pages
 
 })

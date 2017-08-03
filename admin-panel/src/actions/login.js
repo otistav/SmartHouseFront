@@ -1,4 +1,8 @@
 import * as constants from '../constants/actions'
+import axios from 'axios'
+import {saveUser} from "./authorizedUser"
+import {defineUser} from "./authorizedUser"
+
 export function changeLogin(login) {
   return {
     type: constants.CHANGE_LOGIN,
@@ -14,6 +18,31 @@ export function changePassword(password) {
 
   }
 }
+
+export
+const getUser = (login, password) => {
+
+  return (dispatch) => {
+    dispatch({type: constants.IS_FETCHING});
+
+    return axios.post("http://localhost:3001/signin", {
+      username: login,
+      password: password
+    }).then((res) => {
+      dispatch(saveUser({firstName: res.data.firstName, lastName: res.data.lastName, isAdmin: res.data.isAdmin}));
+      dispatch(defineUser(true));
+
+
+    }).catch(err => {
+      console.log(err.response.data.message);
+      dispatch(handleError(err.response.data.message));
+      setTimeout(() => {dispatch({type: constants.RESET_FAIL})},2000);
+      return Promise.reject(err);
+    });
+
+
+  };
+};
 
 
 export function handleError(message) {

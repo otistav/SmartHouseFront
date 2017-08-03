@@ -36,7 +36,14 @@ const LoginBar = (props) => {
                  onChange={e => {props.changePassword(e.target.value)}}
           /><br/>
             {props.renderLoginFieldsError(props.loginForm.fail)}
-              <input type="submit" className="login-button" value="LOG IN"/>
+              {props.loginForm.fail ?
+                <div className="spinner">
+                  <div className="double-bounce1"/>
+                  <div className="double-bounce2"/>
+                </div> :
+                <input type="submit" className="login-button" value="LOG IN"/>
+              }
+
             </form>
 
 

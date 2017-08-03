@@ -1,0 +1,13 @@
+.header {
+  width:100%;
+  position: fixed;
+  background-color: #4F5467;
+  height: 80px;
+}
+
+
+
+.log-out-button {
+  position: absolute;
+  right:0;
+}

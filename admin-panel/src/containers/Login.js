@@ -9,6 +9,7 @@ import axios from 'axios';
 import * as constants from '../constants/actions'
 import {withRouter} from 'react-router-dom'
 import {handleError} from "../actions/login"
+import {getUser} from "../actions/login"
 
 
 class LoginPage extends Component{
@@ -57,30 +58,8 @@ export default withRouter(connect(
       dispatch(changeLogin(login))
     },
     signin: (login, password) => {
-      const getUser = () => {
 
-        return (dispatch) => {
-          dispatch({type: constants.IS_FETCHING});
-
-          return axios.post("http://localhost:3001/signin", {
-            username: login,
-            password: password
-          }).then((res) => {
-            dispatch(saveUser({firstName: res.data.firstName, lastName: res.data.lastName, isAdmin: res.data.isAdmin}));
-            dispatch(defineUser(true));
-
-
-          }).catch(err => {
-            console.log(err.response.data.message);
-            dispatch(handleError(err.response.data.message));
-            setTimeout(() => {dispatch({type: constants.RESET_FAIL})},2000);
-            return Promise.reject(err);
-          });
-
-
-        };
-      };
-      return dispatch(getUser());
+      return dispatch(getUser(login,password));
 
     },
   })

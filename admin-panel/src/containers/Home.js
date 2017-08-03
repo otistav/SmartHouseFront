@@ -21,24 +21,19 @@ import {
 class HomePage extends Component{
 
   render(){
-
-    if (this.props.user.user === undefined){
-      return(
-        <div>
-          wait
-        </div>
-      )
-    }
+    //
+    // if (this.props.user.user === undefined){
+    //   return(
+    //     <div>
+    //       wait
+    //     </div>
+    //   )
+    // }
     const {match, location, history} = this.props;
     return(
-      (this.props.user.user.isAdmin) ?
-        <div>
-          <AdminHomePage history={this.props.history} logOut={this.props.logOut}/>
-        </div>
-        :
-        <div>
-          <UserHomePage history={this.props.history} logOut={this.props.logOut}/>
-        </div>
+      <div>
+        WELCOME
+      </div>
     )
   }
 }
