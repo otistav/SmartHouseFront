@@ -14,7 +14,6 @@ const dispatchPages = () => {
 
   return (dispatch) => {
     return axios.get("http://localhost:3001/pages").then((res) => {
-      console.log("THERE IS PAGES!!!!");
       dispatch(getPages(res));
     }).catch(err => {
       console.log("Devices not received!!!!")

@@ -3,11 +3,15 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import * as constants from '../constants/actions'
 import {logOut} from "../actions/authorizedUser"
-import {AdminHomePage} from "../components/AdminHomePage"
 import {defineUser} from "../actions/authorizedUser"
 import {withRouter} from 'react-router-dom'
 import {UserHomePage} from "../components/UserHomePage"
 import {getDevices} from "../actions/devices"
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import {Dictionary} from "../components/Dictionary"
+
+import {DictionaryHeader} from "../components/DictionaryHeader"
 import {
   BrowserRouter as Router,
   Route,
@@ -25,6 +29,13 @@ class DevicesPage extends Component {
     this.props.getDevices();
   }
 
+  getDeviceByName = (name,devices) => {
+    for (let i=0;i<devices.length;i++){
+      if (devices[i].name === name)
+        console.log("this is selected page",devices[i])
+    }
+  };
+
   getDevicesNames = () => {
     if (this.props.devices !== undefined)
       return this.props.devices.map(device => device.name)
@@ -35,9 +46,15 @@ class DevicesPage extends Component {
     const itemNames = this.getDevicesNames();
 
     return(
-      <div>
-        <SideBar items={this.props.devices} itemNames={itemNames} />
-      </div>
+      <MuiThemeProvider>
+        <Dictionary
+          title="Devices"
+          items={this.props.devices}
+          itemNames={itemNames}
+          getSelectedItem={this.getDeviceByName}
+        >
+        </Dictionary>
+      </MuiThemeProvider>
     )
   }
 }
@@ -53,6 +70,7 @@ export default connect(
 
       return dispatch(dispatchDevices());
     },
+
   })
 
 )(DevicesPage)

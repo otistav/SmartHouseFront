@@ -1,6 +1,7 @@
 import {UserHomePage} from "./UserHomePage"
 import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton'
 import React from 'react';
 import '../styles/adminHomePage.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -49,7 +50,8 @@ const SideBar = (props) => {
           {/*<ContentAdd/>*/}
         {/*</FloatingActionButton>*/}
         {props.items === undefined ? null :
-          props.itemNames.map(item =>{i++;return  <MenuItem key={i} primaryText={item} />})}
+          props.itemNames.map(item =>{i++;return  <MenuItem onTouchTap={() => {props.getSelectedItem(item,props.items)}}
+                                                            key={i} primaryText={item} />})}
       </Menu>
     </Paper>
   </div>

@@ -52,7 +52,6 @@ export default withRouter(connect(
   dispatch => ({
     changePassword: (password) => {
       dispatch(changePassword(password))
-
     },
     changeLogin: (login) => {
       dispatch(changeLogin(login))

@@ -85,9 +85,6 @@ class App extends Component {
   };
 
   render() {
-    console.log("this is pathname ",this.props.location.pathname);
-    // console.log(this.props.user);
-    // console.log(this.props.isAuth);
     const {match, location, history} = this.props;
 
     this.waitingRender();

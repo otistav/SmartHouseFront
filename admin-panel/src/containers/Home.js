@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import * as constants from '../constants/actions'
 import {logOut} from "../actions/authorizedUser"
-import {AdminHomePage} from "../components/AdminHomePage"
 import {defineUser} from "../actions/authorizedUser"
 import {withRouter} from 'react-router-dom'
 import {UserHomePage} from "../components/UserHomePage"
