@@ -15,9 +15,14 @@ import {Dictionary} from "../components/Dictionary"
 import Dialog from 'material-ui/Dialog'
 import {changeLogin} from "../actions/modalCreate"
 import {changePassword} from "../actions/modalCreate"
+import {createUser} from "../actions/modalCreate"
+import {changeAdminStatus} from "../actions/modalCreate"
+import {changeLastName} from "../actions/modalCreate"
 import FlatButton from 'material-ui/FlatButton'
 import {closeModal} from "../actions/modalCreate"
 import {openModal} from "../actions/modalCreate"
+import '../styles/loginBar.css'
+import CurrentUser from "../containers/CurrentUser"
 
 import '../styles/pages.css'
 import {
@@ -44,6 +49,17 @@ class UsersPage extends Component {
     this.props.getUsers();
   }
 
+  renderCreateUserFieldsError = () => {
+    console.log("ERROR RENDER", this.props.errorMessage);
+      return(
+        <div className="login-page-error">
+          {this.props.errorMessage}
+        </div>
+      )
+
+
+  };
+
   getUserByLogin = (login,users) => {
     for (let i=0;i<users.length;i++){
       if (users[i].login === login)
@@ -64,7 +80,7 @@ class UsersPage extends Component {
   };
 
   render(){
-    console.log('this is state', this.state.username);
+    const {match, location, history} = this.props;
     const actions = [
       <FlatButton
         label="Cancel"
@@ -72,8 +88,12 @@ class UsersPage extends Component {
         onTouchTap={this.props.closeModal}/>,
       <FlatButton
         label="Create user"
+        disabled={this.props.isFetching}
         primary={true}
-        onTouchTap={this.props.closeModal}
+
+        onTouchTap={() => {this.props.createUser(this.props.login, this.props.password,
+          this.props.firstName,this.props.lastName,
+          this.props.isAdmin)}}
         />
     ];
 
@@ -83,12 +103,14 @@ class UsersPage extends Component {
       <MuiThemeProvider>
         <div>
           <Dictionary
+            pathh="users"
             openModal={this.props.openModal}
             title="Users"
             items={this.props.users}
             itemNames={itemNames}
             getSelectedItem={this.getUserByLogin}
           >
+            <Route path="/home/users/:id" component={CurrentUser}/>
           </Dictionary>
 
           <Dialog
@@ -97,14 +119,39 @@ class UsersPage extends Component {
             modal={true}
             open={this.props.flag}
           >
-              <form onSubmit={e => {e.preventDefault()}}>
+              <form onSubmit={e => {e.preventDefault();
+              }}
+              >
                 <label>
-                  <input name="hello" type="text" value={this.state.username} onChange={this.changeUsername}/>
-                  <input type="text" onChange={(e) => {this.props.changePassword(e.target.value)}}/>
-                  <input type="text" onChange={(e) => {this.props.changeLogin(e.target.value)}}/>
+                  Login:
+                  <input type="text" value={this.props.login}
+                         onChange={(e) => {this.props.changeLogin(e.target.value)}}
+                  /><br/><br/>
+                  Password:
+                  <input type="text" value={this.props.password}
+                         onChange={(e) => {this.props.changePassword(e.target.value)}}
+                  /><br/>
+                  first name:
+                  <input type="text"
+                         value={this.props.firstName}
+                         onChange={(e) => this.props.changeFirstName(e.target.value)}
+                  /><br/>
+                  last name:
+                  <input type="text" value={this.props.lastName}
+                         onChange={(e) => {this.props.changeLastName(e.target.value)}}
+                  /><br/>
+                  isAdmin:
+                  <input type="checkbox"
+                         checked={this.props.isAdmin}
+                         onChange={(e) => {this.props.changeAdminStatus(e.target.checked)}}/><br/>
+                  {this.props.fail ? this.renderCreateUserFieldsError() : null}
+
+
                 </label>
               </form>
+
           </Dialog>
+
 
         </div>
       </MuiThemeProvider>
@@ -115,8 +162,15 @@ class UsersPage extends Component {
 export default connect(
   state => ({
     users: state.users.users,
-    flag: state.modalCreateUser.flag,
-    login: state.modalCreateUser.login
+    flag: state.modalCreateUser.openModalFlag,
+    login: state.modalCreateUser.login,
+    password: state.modalCreateUser.password,
+    isAdmin: state.modalCreateUser.isAdmin,
+    firstName: state.modalCreateUser.firstName,
+    lastName: state.modalCreateUser.lastName,
+    errorMessage: state.modalCreateUser.errorMessage,
+    fail: state.modalCreateUser.fail,
+    isFetching: state.modalCreateUser.isFetching
   }),
   dispatch => ({
     getUsers: () => {
@@ -135,8 +189,17 @@ export default connect(
     changeLogin: (login) => {
       dispatch(changeLogin(login))
     },
+    changeLastName: (lastName) => {
+      dispatch(changeLastName(lastName))
+    },
     changeFirstName: (firstName) => {
       dispatch(changeFirstName(firstName))
+    },
+    changeAdminStatus: isAdmin => {
+      dispatch(changeAdminStatus(isAdmin))
+    },
+    createUser: (login, password, firstName, lastName, isAdmin) => {
+      return dispatch(createUser(login, password, firstName, lastName, isAdmin))
     }
   })
 

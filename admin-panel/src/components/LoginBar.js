@@ -24,6 +24,7 @@ const LoginBar = (props) => {
               }
             )}}>
           <input type="text"
+                 value={props.loginForm.login}
                  className="username-input"
                  placeholder="username"
                  onChange={e => {props.changeLogin(e.target.value)}}
@@ -31,12 +32,11 @@ const LoginBar = (props) => {
 
           <input name="password"
                  placeholder="password"
+                 value={props.loginForm.password}
                  type="password"
                  className="password-input"
                  onChange={e => {props.changePassword(e.target.value)}}
           /><br/>
-              <input type="text"
-                     />
             {props.renderLoginFieldsError(props.loginForm.fail)}
               {props.loginForm.fail ?
                 <div className="spinner">

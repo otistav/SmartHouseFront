@@ -1,5 +1,6 @@
 import * as constants from '../constants/actions'
-
+import axios from 'axios'
+import {getUsers} from "./users"
 
 
 export function openModal() {
@@ -32,9 +33,10 @@ export function changeLastName(lastName) {
   }
 }
 
-export function setAdminStatus() {
+export function changeAdminStatus(isAdmin) {
   return {
-    type: constants.ADMIN_STATUS_CHANGED
+    type: constants.ADMIN_STATUS_CHANGED,
+    payload: isAdmin
   }
 }
 
@@ -51,5 +53,37 @@ export function changePassword(password) {
     type: constants.CHANGE_PASSWORD_WHEN_CREATE,
     payload: password
 
+  }
+}
+
+export
+const createUser = (login, password, firstName, lastName, isAdmin) => {
+
+  return (dispatch) => {
+    dispatch({type: constants.CREATE_USER_FETCHING});
+    axios.post("http://localhost:3001/users",{
+      login: login,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      isAdmin: isAdmin
+    }).then(() => {
+      dispatch(closeModal())}).then(() =>
+    {
+      axios.get("http://localhost:3001/users").then((res) => {
+        dispatch(getUsers(res));
+      })
+    }).catch((err) =>
+    {
+      dispatch(handleError(err.response.data.message))
+    })
+  };
+
+};
+
+export function handleError(message) {
+  return {
+    type: constants.USER_IS_NOT_CREATED,
+    payload: message
   }
 }

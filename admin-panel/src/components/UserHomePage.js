@@ -3,7 +3,7 @@ import React from 'react';
 export
 const UserHomePage = (props) => {
   return(
-    <div>
+    <div >
       Im User
       <button>LogOut</button>
     </div>

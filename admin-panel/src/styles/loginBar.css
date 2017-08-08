@@ -64,9 +64,9 @@
 }
 
 .login-page-error {
-  background-color: khaki;
+  border: 2px red solid;
   font-size: 20px;
-  border-radius: 10%;
+  color: darkred;
   margin-bottom: 20px;
 
 }

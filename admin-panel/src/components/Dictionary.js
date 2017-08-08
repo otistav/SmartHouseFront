@@ -7,8 +7,10 @@ export
 const Dictionary = (props) => {
   return (
     <div>
-      <DictionaryHeader openModal={props.openModal} title={props.title}/>
-      <SideBar getSelectedItem={props.getSelectedItem} items={props.items} itemNames={props.itemNames}/>
+      <DictionaryHeader openModal={props.openModal}  title={props.title}/>
+      <SideBar getSelectedItem={props.getSelectedItem}
+               pathh={props.pathh}
+               items={props.items} itemNames={props.itemNames}/>
       {props.children}
     </div>
   )

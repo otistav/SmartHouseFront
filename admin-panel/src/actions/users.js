@@ -8,6 +8,8 @@ export function getUsers(users) {
   }
 }
 
+
+
 export
 const dispatchUsers = () => {
 
@@ -15,7 +17,9 @@ const dispatchUsers = () => {
     return axios.get("http://localhost:3001/users").then((res) => {
       dispatch(getUsers(res));
     }).catch(err => {
-      console.log("Devices not received!!!!")
+      console.log("Users Not Received!!!!")
     });
   };
 };
+
+

@@ -29,6 +29,7 @@ import FontIcon from 'material-ui/FontIcon';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+
 const style = {
   paper: {
     display: 'inline-block',
@@ -38,20 +39,24 @@ const style = {
   },
 
 };
-var i = -1;
+
 export
 const SideBar = (props) => {
   return(
     <MuiThemeProvider>
   <div>
     <Paper style={style.paper}>
-      <Menu>
-        {/*<FloatingActionButton style={{right: '20px'}} mini={true}>*/}
-          {/*<ContentAdd/>*/}
-        {/*</FloatingActionButton>*/}
+      <Menu disableAutoFocus={true}>
         {props.items === undefined ? null :
-          props.itemNames.map(item =>{i++;return  <MenuItem onTouchTap={() => {props.getSelectedItem(item,props.items)}}
-                                                            key={i} primaryText={item} />})}
+          props.items.map((item,value) =>{
+                return <MenuItem
+                  key={value}
+                  primaryText={props.itemNames[value]}
+                  containerElement={
+                    <Link to={'/home/'+props.pathh+'/'+item.id}
+                    />
+                  }
+                />})}
       </Menu>
     </Paper>
   </div>

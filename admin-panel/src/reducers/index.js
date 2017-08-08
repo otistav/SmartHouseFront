@@ -6,6 +6,7 @@ import users from './users'
 import controls from './controls'
 import pages from './pages'
 import modalCreateUser from './modalCreateUser'
+import currentUser from './currentUser'
 
 
 export default combineReducers({
@@ -15,6 +16,6 @@ export default combineReducers({
   users,
   controls,
   pages,
-  modalCreateUser
-
+  modalCreateUser,
+  currentUser
 })
