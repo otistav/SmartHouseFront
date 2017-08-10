@@ -35,7 +35,9 @@ const style = {
     display: 'inline-block',
     float: 'left',
     // margin: '16px 32px 16px 0',
-    width: '224px'
+    width: '21%',
+    height: 'auto',
+    minHeight: '563px'
   },
 
 };
@@ -50,10 +52,11 @@ const SideBar = (props) => {
         {props.items === undefined ? null :
           props.items.map((item,value) =>{
                 return <MenuItem
+                  style={{width:'84%'}}
                   key={value}
                   primaryText={props.itemNames[value]}
                   containerElement={
-                    <Link to={'/home/'+props.pathh+'/'+item.id}
+                    <Link to={'/home/'+props.path+'/'+item.id}
                     />
                   }
                 />})}

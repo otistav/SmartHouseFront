@@ -7,6 +7,11 @@ import controls from './controls'
 import pages from './pages'
 import modalCreateUser from './modalCreateUser'
 import currentUser from './currentUser'
+import modalCreateDevice from './modalCreateDevice'
+import currentDevice from './currentDevice'
+import modalCreateControl from './modalCreateControl'
+import currentControl from './currentControl'
+import modalCreatePage from './modalCreatePage'
 
 
 export default combineReducers({
@@ -17,5 +22,11 @@ export default combineReducers({
   controls,
   pages,
   modalCreateUser,
-  currentUser
+  currentUser,
+  modalCreateDevice,
+  currentDevice,
+  modalCreateControl,
+  currentControl,
+  modalCreatePage
+
 })

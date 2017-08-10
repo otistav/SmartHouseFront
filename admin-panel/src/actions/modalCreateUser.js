@@ -68,10 +68,13 @@ const createUser = (login, password, firstName, lastName, isAdmin) => {
       lastName: lastName,
       isAdmin: isAdmin
     }).then(() => {
-      dispatch(closeModal())}).then(() =>
+      dispatch(closeModal());
+      dispatch({type: constants.USER_CREATED})
+    }).then(() =>
     {
       axios.get("http://localhost:3001/users").then((res) => {
         dispatch(getUsers(res));
+
       })
     }).catch((err) =>
     {

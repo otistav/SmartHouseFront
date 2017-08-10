@@ -9,11 +9,18 @@ const deleteUser = (id) => {
 
   return (dispatch) => {
     return axios.delete("http://localhost:3001/users/" + id).then((res) => {
+      console.log('heeey');
       axios.get("http://localhost:3001/users").then((res) => {
         dispatch(getUsers(res));
+        dispatch({type: constants.USER_DELETED})
       })
     }).catch(err => {
-      console.log(err)
+      if (err.response.data.message === undefined){
+        dispatch(handleError('there is some problem on server! Please, try again later'));
+      }
+      else {
+        dispatch(handleError(err.response.data.message))
+      }
     });
   };
 };
@@ -58,7 +65,12 @@ const editUser = (id, login, firstName, lastName, adminStatus) => {
       })
 
     }).catch(err => {
-      console.log(err.response.data.message)
+      if (err.response.data.message === undefined){
+        dispatch(handleError('there is some problem on server! Please, try again later'));
+      }
+      else {
+        dispatch(handleError(err.response.data.message))
+      }
     })
   }
 
@@ -123,7 +135,24 @@ const getCurrentUser = (id) => {
       dispatch(getUserForm(res))
 
     }).catch(err => {
-      console.log("Devices not received!!!!")
+      if (err.response.data.message === undefined){
+        dispatch(handleError('there is some problem on server! Please, try again later'));
+        setTimeout(() => {dispatch({type: constants.RESET_FAIL})}, 3000)
+      }
+      else {
+        dispatch(handleError(err.response.data.message));
+        setTimeout(() => {dispatch({type: constants.RESET_FAIL})}, 3000)
+      }
+
     });
   };
+};
+
+
+
+export const handleError = (message) => {
+  return {
+    type: constants.CURRENT_USER_ERROR,
+    payload: message
+  }
 };

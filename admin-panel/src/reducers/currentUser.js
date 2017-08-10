@@ -1,6 +1,6 @@
 import * as constants from '../constants/actions'
 
-export default function currentUser(state = {confirmModalOpen: false}, action) {
+export default function currentUser(state = {confirmModalOpen: false,fail: false, errorMessage:''}, action) {
   switch(action.type){
     case constants.CURRENT_USER_RECEIVED: {
       return {
@@ -71,6 +71,29 @@ export default function currentUser(state = {confirmModalOpen: false}, action) {
           isAdmin: action.payload
         }
 
+      }
+    }
+
+    case constants.CURRENT_USER_ERROR: {
+      return {
+        ...state,
+        errorMessage: action.payload,
+        fail: true
+      }
+    }
+
+    case constants.RESET_FAIL: {
+      return {
+        ...state,
+        errorMessage: '',
+        fail: false
+      }
+    }
+    case constants.USER_DELETED: {
+      return {
+        ...state,
+        errorMessage: '',
+        fail: false
       }
     }
 

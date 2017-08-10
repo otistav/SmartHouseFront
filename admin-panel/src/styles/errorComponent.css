@@ -1,0 +1,12 @@
+.error {
+  font-size: 25px;
+  position: fixed;
+  right: 20px;
+
+  bottom: 0;
+  width: 250px;
+  background-color: #869095;
+  color: red;
+  border: 2px solid #ff6651
+}
+

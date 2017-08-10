@@ -8,6 +8,14 @@ export function getDevices(devices) {
   }
 }
 
+export function getDeviceTypes(deviceTypes) {
+  return {
+    type: constants.DEVICE_TYPES_RECEIVED,
+    payload: deviceTypes.data
+  }
+
+}
+
 export
 const dispatchDevices = () => {
 
@@ -18,4 +26,15 @@ const dispatchDevices = () => {
       console.log("Devices not received!!!!")
     });
   };
+};
+
+export const setDeviceTypes = () => {
+  return (dispatch) => {
+    return axios.get("http://localhost:3001/devicetypes").then((res) => {
+      dispatch(getDeviceTypes(res));
+      console.log('DeviceTypes received, asshole')
+    }).catch(err => {
+      console.log("DEVICETYPES NOT RECEIVED,ASSHOLE")
+    })
+  }
 };

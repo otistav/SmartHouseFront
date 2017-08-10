@@ -17,9 +17,26 @@ const dispatchUsers = () => {
     return axios.get("http://localhost:3001/users").then((res) => {
       dispatch(getUsers(res));
     }).catch(err => {
-      console.log("Users Not Received!!!!")
+      if (err.response.data.message === undefined){
+        dispatch(handleError('there is some problem on server! Please, try again later'));
+        setTimeout(() => {dispatch({type: constants.RESET_USERS_FAIL})}, 3000)
+      }
+      else {
+        dispatch(handleError(err.response.data.message));
+        setTimeout(() => {dispatch({type: constants.RESET_USERS_FAIL})}, 3000);
+        return Promise.reject(err)
+      }
     });
   };
 };
+
+
+export const handleError = (message) => {
+  return {
+    type: constants.USERS_ERROR,
+    payload: message
+  }
+};
+
 
 

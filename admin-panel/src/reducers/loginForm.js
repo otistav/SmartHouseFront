@@ -1,6 +1,6 @@
 import * as constants from '../constants/actions'
 
-export default function loginForm(state = {fail: false}, action) {
+export default function loginForm(state = {fail: false, login:'',password: ''}, action) {
   switch(action.type){
     case constants.IS_FETCHING: {
       return {

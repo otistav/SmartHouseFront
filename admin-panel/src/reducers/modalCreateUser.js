@@ -2,7 +2,7 @@ import * as constants from '../constants/actions'
 
 export default function modalCreateUser(state = {openModalFlag:false, fail: false,
   isAdmin: false, isFetching:false, login:'', password:'', errorMessage: ''}, action) {
-  switch(action.type){
+  switch(action.type) {
     case constants.MODAL_OPENED: {
       return {
         ...state,
@@ -43,7 +43,8 @@ export default function modalCreateUser(state = {openModalFlag:false, fail: fals
       return {
         ...state,
         isFetching: false,
-        fail:false
+        fail:false,
+        errorMessage: ''
       }
     }
 

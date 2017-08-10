@@ -8,16 +8,21 @@ import {withRouter} from 'react-router-dom'
 import {UserHomePage} from "../components/UserHomePage"
 import {getDevices} from "../actions/devices"
 import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider'
+import '../styles/currentUser.css'
+import TextField from 'material-ui/TextField';
+import Checkbox from 'material-ui/Checkbox';
+import {ErrorMessage} from "../components/errorMessage"
 
 import {DictionaryHeader} from "../components/DictionaryHeader"
-import Checkbox from 'material-ui/Checkbox';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {Dictionary} from "../components/Dictionary"
 import Dialog from 'material-ui/Dialog'
-import {createUser} from "../actions/modalCreate"
+import {createUser} from "../actions/modalCreateUser"
 import FlatButton from 'material-ui/FlatButton'
-import {closeModal} from "../actions/modalCreate"
-import {openModal} from "../actions/modalCreate"
+import RaisedButton from 'material-ui/RaisedButton'
+import {closeModal} from "../actions/modalCreateUser"
+import {openModal} from "../actions/modalCreateUser"
 import {getCurrentUser} from "../actions/currentUser"
 import {deleteUser} from "../actions/currentUser"
 import '../styles/loginBar.css'
@@ -43,7 +48,6 @@ class CurrentUser extends Component {
     this.props.getCurrentUser(this.props.match.params.id)
   }
   render() {
-    console.log("this is confirm modal flag",this.props.confirmModalFlag);
     const actions = [
       <FlatButton
         label="Cancel"
@@ -55,63 +59,118 @@ class CurrentUser extends Component {
 
         onTouchTap={
           () => {
-            this.props.deleteUser(this.props.currentUser.id);
-            this.props.closeConfirmModal()
+            this.props.deleteUser(this.props.currentUser.id).then(() => {
+              this.props.closeConfirmModal();
+              setTimeout(() => {this.props.resetFail()}, 6000)
+
+
+            });
+
           }
         }
       />
     ];
+    const styles = {
+      block: {
+        maxWidth: 250,
+      },
+      checkbox: {
+        marginBottom: 16,
+      },
+    };
     return (
       <div>
         {(this.props.currentUser === undefined || this.props.userForm === undefined) ? null :
           <MuiThemeProvider>
-            <Paper>
-              <FlatButton onTouchTap={this.props.openConfirmModal}
-                          label="DELETE USER" style={{border: '2px red solid', color: 'red'}}
-              /><br/><br/>
-              Login:
-              <input type="text"
-                     value={this.props.userForm.login}
-                     onChange={(e) => {this.props.changeLogin(e.target.value)}}/>
-              First Name:
-              <input type="text"
-                     value={this.props.userForm.firstName}
-                     onChange={(e) => {this.props.changeFirstName(e.target.value)}}/>
-              Last Name:
-              <input type="text"
-                     value={this.props.userForm.lastName}
-                     onChange={(e) => {this.props.changeLastName(e.target.value)}}/>
-              Admin Status:
-              <input type="checkbox"
-                     checked={this.props.userForm.isAdmin}
-                     onChange={(e) => {this.props.changeAdminStatus(e.target.checked)}}/>
-              <FlatButton
-                label="EDIT"
-                onTouchTap={
-                  () => {
-                    console.log("this is isadmin",this.props.userForm.isAdmin);
-                    this.props.editUser(
-                      this.props.currentUser.id,
-                      this.props.userForm.login,
-                      this.props.userForm.firstName,
-                      this.props.userForm.lastName,
-                      this.props.userForm.isAdmin)
-                  }
-                }
-              />
+            <div className="current-user-content">
+              <Paper>
+                <div style={styles.block} className="current-user-input">
+
+                  <TextField floatingLabelText="Login"
+                             floatingLabelFixed={true}
+                             errorText={this.props.userForm.login === "" ? 'login is required' : null}
+                             value={this.props.userForm.login}
+                             onChange={(e) => {this.props.changeLogin(e.target.value)}}/><br/>
+
+                  <TextField value={this.props.userForm.firstName}
+                             floatingLabelText="First Name"
+                             floatingLabelFixed={true}
+                             errorText={this.props.userForm.firstName === "" ? 'first Name is required' : null}
+                             onChange=
+                           {
+                             (e) => {
+                               this.props.changeFirstName(e.target.value)
+                             }
+                           }
+                  /><br/>
+                  <TextField value={this.props.userForm.lastName}
+                             floatingLabelText="Last Name"
+                             floatingLabelFixed={true}
+                             onChange=
+                               {
+                                 (e) => {
+                                   this.props.changeLastName(e.target.value)
+                                 }
+                               }
+                  /><br/>
+                  <Checkbox checked={this.props.userForm.isAdmin}
+                            onCheck=
+                              {
+                                (e) => {
+                                  this.props.changeAdminStatus(e.target.checked)
+                                }
+                              }
+                            label="Is Admin"
+                            labelPosition="left"
+                  />
+
+
+                </div>
+                <Divider/>
+                <div style={{margin: '10px', paddingBottom: '10px'}}>
+                  <RaisedButton
+                    label="SAVE"
+                    backgroundColor="#3F9298"
+                    style={{marginRight: '10px'}}
+                    primary={true}
+                    onTouchTap={
+                      () => {
+                        this.props.editUser(
+                          this.props.currentUser.id,
+                          this.props.userForm.login,
+                          this.props.userForm.firstName,
+                          this.props.userForm.lastName,
+                          this.props.userForm.isAdmin
+                        ).then(() => {
+                          setTimeout(() => {
+                            this.props.resetFail()
+                          }, 6000)
+                        })
+                      }
+                    }
+                  />
+                  <FlatButton onTouchTap={this.props.openConfirmModal}
+
+                              label="DELETE USER" style={{border: '2px red solid', color: 'red',marginLeft: '10px'}}
+                  />
+                </div>
 
 
 
 
-              <Dialog
-                title="Are you sure you want to delete this user?"
-                actions={actions}
-                modal={true}
-                open={this.props.confirmModalFlag}
-              >
-              </Dialog>
-            </Paper>
+
+                <Dialog
+                  title="Are you sure you want to delete this user?"
+                  actions={actions}
+                  modal={true}
+                  open={this.props.confirmModalFlag}
+                >
+                </Dialog>
+
+              </Paper>
+            </div>
           </MuiThemeProvider>}
+        <ErrorMessage fail={this.props.fail} errorMessage={this.props.errorMessage}/>
       </div>
     )
   }
@@ -121,6 +180,9 @@ class CurrentUser extends Component {
 
 export default connect(
   state => ({
+    fail: state.currentUser.fail,
+    errorMessage: state.currentUser.errorMessage,
+    users: state.users.users,
     currentUser: state.currentUser.user,
     userForm: state.currentUser.userForm,
     confirmModalFlag: state.currentUser.confirmModalOpen
@@ -151,6 +213,10 @@ export default connect(
     editUser: (id, login, firstName, lastName, adminStatus) => {
       return dispatch(editUser(id, login, firstName, lastName, adminStatus))
     },
+    resetFail: () => {
+      dispatch({type: constants.RESET_FAIL})
+    },
+
 
     deleteUser: (id) => {
       return dispatch(deleteUser(id))

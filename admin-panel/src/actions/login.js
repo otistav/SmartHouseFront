@@ -34,8 +34,14 @@ const getUser = (login, password) => {
 
 
     }).catch(err => {
-      console.log(err.response.data.message);
-      dispatch(handleError(err.response.data.message));
+      console.log("this is error ",err.response.data.message);
+      if (err.response.data.message === undefined){
+        dispatch(handleError('there is some problem on server! Please, try again later'));
+      }
+      else {
+        dispatch(handleError(err.response.data.message))
+      }
+
       setTimeout(() => {dispatch({type: constants.RESET_FAIL})},2000);
       return Promise.reject(err);
     });

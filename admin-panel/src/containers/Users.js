@@ -8,19 +8,20 @@ import {withRouter} from 'react-router-dom'
 import {UserHomePage} from "../components/UserHomePage"
 import {getDevices} from "../actions/devices"
 import {DictionaryHeader} from "../components/DictionaryHeader"
-import {changeFirstName} from "../actions/modalCreate"
+import {changeFirstName} from "../actions/modalCreateUser"
+import {ErrorMessage} from "../components/errorMessage"
 import Checkbox from 'material-ui/Checkbox';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {Dictionary} from "../components/Dictionary"
 import Dialog from 'material-ui/Dialog'
-import {changeLogin} from "../actions/modalCreate"
-import {changePassword} from "../actions/modalCreate"
-import {createUser} from "../actions/modalCreate"
-import {changeAdminStatus} from "../actions/modalCreate"
-import {changeLastName} from "../actions/modalCreate"
+import {changeLogin} from "../actions/modalCreateUser"
+import {changePassword} from "../actions/modalCreateUser"
+import {createUser} from "../actions/modalCreateUser"
+import {changeAdminStatus} from "../actions/modalCreateUser"
+import {changeLastName} from "../actions/modalCreateUser"
 import FlatButton from 'material-ui/FlatButton'
-import {closeModal} from "../actions/modalCreate"
-import {openModal} from "../actions/modalCreate"
+import {closeModal} from "../actions/modalCreateUser"
+import {openModal} from "../actions/modalCreateUser"
 import '../styles/loginBar.css'
 import CurrentUser from "../containers/CurrentUser"
 
@@ -46,19 +47,13 @@ class UsersPage extends Component {
   }
 
   componentDidMount(){
-    this.props.getUsers();
+    this.props.getUsers().catch(() => {console.log('HELLO');setTimeout(() =>
+      {
+        this.props.history.replace('/home')
+      }, 2000)
+    }
+    );
   }
-
-  renderCreateUserFieldsError = () => {
-    console.log("ERROR RENDER", this.props.errorMessage);
-      return(
-        <div className="login-page-error">
-          {this.props.errorMessage}
-        </div>
-      )
-
-
-  };
 
   getUserByLogin = (login,users) => {
     for (let i=0;i<users.length;i++){
@@ -75,9 +70,10 @@ class UsersPage extends Component {
 
 
   getItemNames = () => {
-    if (this.props.users !== undefined)
+    if (this.props.users !== undefined){
+      console.log("this is users", this.props.users);
       return this.props.users.map(user => user.login)
-  };
+}};
 
   render(){
     const {match, location, history} = this.props;
@@ -103,7 +99,7 @@ class UsersPage extends Component {
       <MuiThemeProvider>
         <div>
           <Dictionary
-            pathh="users"
+            path="users"
             openModal={this.props.openModal}
             title="Users"
             items={this.props.users}
@@ -144,14 +140,14 @@ class UsersPage extends Component {
                   <input type="checkbox"
                          checked={this.props.isAdmin}
                          onChange={(e) => {this.props.changeAdminStatus(e.target.checked)}}/><br/>
-                  {this.props.fail ? this.renderCreateUserFieldsError() : null}
+                  <ErrorMessage fail={this.props.fail} errorMessage={this.props.errorMessage}/>
 
 
                 </label>
               </form>
 
           </Dialog>
-
+          <ErrorMessage fail={this.props.getUsersFail} errorMessage={this.props.errorMessageUsers} />
 
         </div>
       </MuiThemeProvider>
@@ -170,6 +166,8 @@ export default connect(
     lastName: state.modalCreateUser.lastName,
     errorMessage: state.modalCreateUser.errorMessage,
     fail: state.modalCreateUser.fail,
+    getUsersFail: state.users.fail,
+    errorMessageUsers: state.users.errorMessage,
     isFetching: state.modalCreateUser.isFetching
   }),
   dispatch => ({

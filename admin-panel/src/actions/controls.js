@@ -8,6 +8,14 @@ export function getControls(controls) {
   }
 }
 
+export function getControlTypes(deviceTypes) {
+  return {
+    type: constants.CONTROL_TYPES_RECEIVED,
+    payload: deviceTypes.data
+  }
+
+}
+
 export
 const dispatchControls = () => {
 
@@ -18,4 +26,15 @@ const dispatchControls = () => {
       console.log("Devices not received!!!!")
     });
   };
+};
+
+export const setControlTypes = () => {
+  return (dispatch) => {
+    return axios.get("http://localhost:3001/controltypes").then((res) => {
+      dispatch(getControlTypes(res));
+      console.log('DeviceTypes received, asshole')
+    }).catch(err => {
+      console.log("DEVICETYPES NOT RECEIVED,ASSHOLE")
+    })
+  }
 };
