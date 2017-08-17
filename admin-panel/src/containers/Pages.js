@@ -3,11 +3,15 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import {ErrorMessage} from "../components/errorMessage"
 import Dialog from 'material-ui/Dialog'
+import FontAwesome from 'react-fontawesome'
+import {Icon} from 'react-fa'
 import TextField from 'material-ui/TextField'
 import {getIcons} from "../actions/modalCreatePage"
 import FlatButton from 'material-ui/FlatButton'
 import SelectField from 'material-ui/SelectField'
+import CurrentPage from '../containers/CurrentPage'
 import MenuItem from 'material-ui/MenuItem'
+import {Route} from 'react-router-dom'
 import {
   changeYPosition,
   changeName,
@@ -81,6 +85,7 @@ class Pages extends Component {
           itemNames={itemNames}
           getSelectedItem={this.getPageByName}
         >
+          <Route path="/home/pages/:id" component={CurrentPage}/>
         </Dictionary>
 
         <Dialog
@@ -119,8 +124,9 @@ class Pages extends Component {
             {this.props.icons===undefined ? null :
               <SelectField value={this.props.iconID} floatingLabelText="icon ID"  onChange={(event,index,value) => {this.props.changeIconID(value)}} >
                 {this.props.icons.map((icon,value) =>
-                  <MenuItem value={icon.id} primaryText={
-                    this.props.icons[value].name
+
+                  <MenuItem value={icon.id} key={value} primaryText={
+                    <FontAwesome name={this.props.icons[value].path}/>
                   }/>)}
               </SelectField>}
 
@@ -140,11 +146,9 @@ class Pages extends Component {
   }
 }
 
-
-
 export default connect(
   state => ({
-    icons: state.modalCreatePage.icons,
+    icons: state.pages.icons,
     caption: state.modalCreatePage.caption,
     pages: state.pages.pages,
     flag: state.modalCreatePage.openModalFlag,

@@ -18,12 +18,7 @@ export default function modalCreateUser(state = {openModalFlag:false, fail: fals
       }
     }
 
-    case constants.ICONS_RECEIVED: {
-      return {
-        ...state,
-        icons: action.payload
-      }
-    }
+
 
     case constants.PAGE_NAME_CHANGED: {
       return {
@@ -38,6 +33,7 @@ export default function modalCreateUser(state = {openModalFlag:false, fail: fals
         caption: action.payload
       }
     }
+
 
     case constants.PAGE_WIDTH_CHANGED: {
       return {

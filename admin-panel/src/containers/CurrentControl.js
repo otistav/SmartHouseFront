@@ -100,9 +100,12 @@ class CurrentControl extends Component {
                              errorText={this.props.controlForm.name === "" ? 'control is required' : null}
                              value={this.props.controlForm.name}
                              onChange={(e) => {this.props.changeName(e.target.value)}}/><br/>
-                  <SelectField floatingLabelText="device type" value={this.props.controlForm.typeUUID}  onChange=
+                  <SelectField
+                    floatingLabelText="device type"
+                    value={this.props.controlForm.typeUUID}
+                    onChange=
                     {
-                      (event,index,value) =>
+                      (event, index, value) =>
                       {
                         console.log(value);
                         this.props.changeControlType(value)

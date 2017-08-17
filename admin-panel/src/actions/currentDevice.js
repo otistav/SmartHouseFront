@@ -51,7 +51,6 @@ const editDevice = (id, name,uuid) => {
         typeUUID: uuid
 
       }).then((res) => {
-      console.log(res);
       axios.get("http://localhost:3001/devices").then((res) => {
         dispatch(getDevices(res));
       })

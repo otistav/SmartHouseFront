@@ -45,7 +45,7 @@ class App extends Component {
     })
   }
 
-  getRedirect = () => {
+  getRedirect() {
     if (this.props.isAuth === false) {
       return(
         <Redirect to="/login"/>
@@ -61,7 +61,7 @@ class App extends Component {
     return null
 
   };
-  waitingRender = () => {
+  waitingRender() {
     if (this.props.isAuth === undefined || this.props.user === undefined) {
       return(
         <div className="waiting">
@@ -93,8 +93,6 @@ class App extends Component {
         <div>
         <Router>
           <div>
-
-
             {this.props.isAuth === false ? null :
               <Header logOut={this.props.logOut} history={this.props.history}/>}
             {this.getRedirect()}

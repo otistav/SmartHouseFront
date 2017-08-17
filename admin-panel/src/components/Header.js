@@ -1,4 +1,3 @@
-import {UserHomePage} from "./UserHomePage"
 import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
 import React from 'react';
@@ -7,16 +6,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar'
 import FlatButton from 'material-ui/FlatButton'
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu'
-
-import {GridList, GridTile} from 'material-ui/GridList';
 import {
-  BrowserRouter as Router,
-  Route,
   Link,
-  Switch,
-  Redirect
 } from 'react-router-dom'
-import RaisedButton from 'material-ui/RaisedButton';
 
 export
 const Header = (props) => {

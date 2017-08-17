@@ -54,7 +54,6 @@ class DevicesPage extends Component {
   };
 
   render(){
-    console.log("THIS IS DEVTYPE", this.props.deviceType);
     const actions = [
       <FlatButton
         label="Cancel"

@@ -12,7 +12,8 @@ import currentDevice from './currentDevice'
 import modalCreateControl from './modalCreateControl'
 import currentControl from './currentControl'
 import modalCreatePage from './modalCreatePage'
-
+import currentPage from './currentPage'
+import currentPageControl from './currentPageControl'
 
 export default combineReducers({
   loginForm,
@@ -27,6 +28,8 @@ export default combineReducers({
   currentDevice,
   modalCreateControl,
   currentControl,
-  modalCreatePage
+  modalCreatePage,
+  currentPage,
+  currentPageControl
 
 })

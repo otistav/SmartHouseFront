@@ -91,7 +91,8 @@ class ControlsPage extends Component {
               /><br/><br/>
 
               {this.props.controlTypes===undefined ? null :
-                <DropDownMenu value={this.props.controlType}  onChange={(event,index,value) => {this.props.changeControlType(value)}} >
+                <DropDownMenu value={this.props.controlType}  onChange={(event,index,value) => {
+                  this.props.changeControlType(value)}} >
                   {this.props.controlTypes.map((controlType,value) =>
                     <MenuItem value={controlType.uuid} primaryText={
                       this.props.controlTypes[value].name

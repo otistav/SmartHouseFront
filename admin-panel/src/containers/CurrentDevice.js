@@ -39,6 +39,7 @@ import '../styles/loginBar.css'
 
 
 class CurrentDevice extends Component {
+
   componentWillUpdate(nextProps) {
     if ((nextProps.match.params.id !== this.props.match.params.id)) {
       this.props.getCurrentDevice(nextProps.match.params.id)

@@ -29,6 +29,7 @@ export
 const getIcons = () => {
 
   return (dispatch) => {
+    dispatch({type: constants.ICONS_IS_FETCHING});
     return axios.get("http://localhost:3001/icons").then((res) => {
       console.log('ICONS RECEIVED');
       dispatch(setIcons(res));

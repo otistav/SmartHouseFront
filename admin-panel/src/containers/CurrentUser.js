@@ -54,7 +54,7 @@ class CurrentUser extends Component {
         primary={true}
         onTouchTap={this.props.closeConfirmModal}/>,
       <FlatButton
-        label="DELETE USER"
+        label="DELETE"
         primary={true}
 
         onTouchTap={

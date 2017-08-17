@@ -5,6 +5,8 @@ import * as constants from '../constants/actions'
 import {logOut} from "../actions/authorizedUser"
 import {defineUser} from "../actions/authorizedUser"
 import {withRouter} from 'react-router-dom'
+import FontAwesome from 'react-fontawesome'
+import {Icon} from 'react-fa'
 import {UserHomePage} from "../components/UserHomePage"
 import {
   BrowserRouter as Router,
@@ -32,6 +34,8 @@ class HomePage extends Component{
     return(
       <div>
         WELCOME
+        <Icon spin name="spinner" />
+        <FontAwesome name="rocket"/>
       </div>
     )
   }

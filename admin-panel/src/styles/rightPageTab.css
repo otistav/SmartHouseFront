@@ -1,0 +1,16 @@
+.left-side {
+  width: 50%;
+  min-height: 500px;
+  height: 100%;
+}
+
+.right-side {
+  width: 50%;
+  height: 100%;
+  min-height: 500px;
+  border-left: 2px solid black
+}
+
+.content {
+  display: flex;
+}
