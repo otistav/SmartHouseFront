@@ -44,13 +44,96 @@ export function getControlForm(control) {
 }
 
 export
-const editControl = (id, name,uuid) => {
+const createRule = (id, type, event, func) => {
+
+  return dispatch => {
+    return axios.post("http://localhost:3001/rules",
+      {
+        sourceID: id,
+        sourceType: type,
+        event: event,
+        func: func
+      }).then((res) =>
+    {
+      console.log(res)
+    })
+  }
+};
+
+
+export
+const editRule = (id, event, func) => {
+
+  return dispatch => {
+    return axios.patch("http://localhost:3001/rules/" + id,
+      {
+        event: event,
+        func: func
+      }).then((res) =>
+    {
+      console.log(res)
+    })
+  }
+};
+
+export function createNewRule(rule) {
+  return {
+    type: constants.NEW_RULE_CREATED,
+    payload: rule
+  }
+}
+
+export function editRuleFunc(func) {
+  return {
+    type: constants.RULE_FUNC_EDITED,
+    payload: func
+  }
+
+}
+
+export function editRuleEvent(func) {
+  return {
+    type: constants.RULE_EVENT_EDITED,
+    payload: func
+  }
+
+}
+
+export function selectCurrentRule(rule) {
+  return {
+    type: constants.CURRENT_RULE_SELECTED,
+    payload: rule
+  }
+}
+
+export function setRules(rules) {
+  return {
+    type: constants.CONTROL_RULES_RECEIVED,
+    payload: rules
+  }
+}
+
+export
+const getRules = (id) => {
+  return dispatch => {
+    axios.get("http://localhost:3001/rules?controlID=" + id +"&type=control").then((res) => {
+      console.log(res);
+      dispatch(setRules(res.data))
+
+      }
+    )
+  }
+};
+
+export
+const editControl = (id, name,uuid, func) => {
 
   return (dispatch) => {
     return axios.patch("http://localhost:3001/controls/" + id,
       {
         name: name,
-        typeUUID: uuid
+        typeUUID: uuid,
+        func: func
 
       }).then((res) => {
       console.log(res);
@@ -66,7 +149,7 @@ const editControl = (id, name,uuid) => {
       })
 
     }).catch(err => {
-      if (err.response.data.message === undefined){
+      if (err.response === undefined){
         dispatch(handleError('there is some problem on server! Please, try again later'));
       }
       else {
@@ -76,6 +159,46 @@ const editControl = (id, name,uuid) => {
   }
 
 };
+
+export
+const editControlFunction = (id, func) => {
+
+  return (dispatch) => {
+    return axios.patch("http://localhost:3001/controls/" + id,
+      {
+        propFunction: func
+
+      }).then((res) => {
+      console.log(res);
+      axios.get("http://localhost:3001/controls").then((res) => {
+        dispatch(getControls(res));
+      })
+    }).then(() => {
+      axios.get("http://localhost:3001/controls/"+id).then((res) => {
+        console.log("control");
+        dispatch(getControl(res));
+        dispatch(getControlForm(res))
+
+      })
+
+    }).catch(err => {
+      if (err.response === undefined){
+        dispatch(handleError('there is some problem on server! Please, try again later'));
+      }
+      else {
+        dispatch(handleError(err.response.data.message))
+      }
+    })
+  }
+
+};
+
+export function onEditControlFunction(func) {
+  return {
+    type: constants.CONTROL_FUNCTION_EDITED,
+    payload: func
+  }
+}
 
 
 export function openConfirmModal() {
@@ -121,7 +244,7 @@ const getCurrentControl = (id) => {
       dispatch(getControlForm(res))
 
     }).catch(err => {
-      if (err.response.data.message === undefined){
+      if (err.response === undefined){
         dispatch(handleError('there is some problem on server! Please, try again later'));
         setTimeout(() => {dispatch({type: constants.RESET_CONTROL_FAIL})}, 3000)
       }

@@ -41,6 +41,14 @@ import {dispatchControls} from "../actions/controls"
 
 
 class CurrentPage extends Component {
+  constructor() {
+    super();
+    this.state = {
+      tabValue: 'a'
+    };
+    this.handleChangeTabs = this.handleChangeTabs.bind(this)
+  }
+
   componentWillUpdate(nextProps) {
 
     if ((nextProps.match.params.id !== this.props.match.params.id)) {
@@ -70,6 +78,13 @@ class CurrentPage extends Component {
       return <MenuItem value={item.id} primaryText={item.name}/>
     });
     return arr
+  }
+
+  handleChangeTabs(value) {
+    this.setState({
+      tabValue: value
+    })
+
   }
 
   render() {
@@ -113,8 +128,13 @@ class CurrentPage extends Component {
             <MuiThemeProvider>
               <div className="current-user-content">
                 <Paper>
-                  <Tabs>
-                    <Tab label="Edit Page Fields">
+                  <Tabs
+                    value={this.state.value}
+                    onChange={this.handleChangeTabs}
+                  >
+                    <Tab label="Edit Page Fields"
+                         value="a"
+                    >
                       <div style={styles.block} className="current-user-input">
                         <div style={{display: 'block'}}>
                           <TextField floatingLabelText="Name"
@@ -247,7 +267,9 @@ class CurrentPage extends Component {
                     </Tab>
 
 
-                    <Tab label="Page Controls">
+                    <Tab label="Page Controls"
+                         value="b"
+                    >
                       <div className="content">
                         <div className="left-side">
                           <div className="page-content-header" style={{backgroundColor: 'white'}}>
@@ -264,6 +286,8 @@ class CurrentPage extends Component {
                             </div>
                           </div>
                           <Menu disableAutoFocus={true}
+                                selectedMenuItemStyle={{backgroundColor: '#CCCCCC'}}
+                                value={this.props.currentPageControl}
                                 onChange={(event, value) =>
                                 {
                                   this.props.setCurrentControl(value)
@@ -301,8 +325,9 @@ class CurrentPage extends Component {
                               />
                               <TextField value={this.props.pageControlForm.height}
                                          floatingLabelText="height"
+                                         style={{marginRight: '10px'}}
                                          floatingLabelFixed={true}
-                                         onChange=
+                                           onChange=
                             {
                               (e) => {
                               this.props.editHeight(e.target.value)

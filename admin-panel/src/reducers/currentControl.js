@@ -41,6 +41,28 @@ export default function currentControl(state = {confirmModalOpen: false,fail: fa
 
       }
     }
+
+    case constants.CONTROL_RULES_RECEIVED: {
+      return {
+        ...state,
+        rules: action.payload
+      }
+    }
+
+    case constants.CURRENT_RULE_SELECTED: {
+      return {
+        ...state,
+        currentRule: action.payload,
+        currentRuleForm: action.payload
+      }
+    }
+    case constants.NEW_RULE_CREATED: {
+      return {
+        ...state,
+        rules: [...state.rules, action.payload]
+
+      }
+    }
     case constants.RESET_CONTROL_FAIL: {
       return {
         ...state,
@@ -56,6 +78,35 @@ export default function currentControl(state = {confirmModalOpen: false,fail: fa
           typeUUID: action.payload
         }
 
+      }
+    }
+
+    case constants.RULE_FUNC_EDITED: {
+      return {
+        ...state,
+        currentRuleForm: {
+          ...state.currentRuleForm,
+          func: action.payload
+        }
+      }
+    }
+
+    case constants.CONTROL_FUNCTION_EDITED: {
+      return {
+        ...state,
+        controlForm: {
+          ...state.controlForm,
+          propFunction: action.payload
+        }
+      }
+    }
+    case constants.RULE_EVENT_EDITED: {
+      return {
+        ...state,
+        currentRuleForm: {
+          ...state.currentRuleForm,
+          event: action.payload
+        }
       }
     }
 

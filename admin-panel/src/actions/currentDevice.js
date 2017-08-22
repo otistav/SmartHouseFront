@@ -74,6 +74,128 @@ const editDevice = (id, name,uuid) => {
 
 };
 
+export
+const editDeviceFunc = (id, func) => {
+
+  return (dispatch) => {
+    return axios.patch("http://localhost:3001/devices/" + id,
+      {
+        propFunction: func
+
+      }).then((res) => {
+      axios.get("http://localhost:3001/devices").then((res) => {
+        dispatch(getDevices(res));
+      })
+    }).then(() => {
+      axios.get("http://localhost:3001/devices/"+id).then((res) => {
+        console.log("DEVICE");
+        dispatch(getDevice(res));
+        dispatch(getDeviceForm(res))
+
+      })
+
+    }).catch(err => {
+      if (err.response.data.message === undefined){
+        dispatch(handleError('there is some problem on server! Please, try again later'));
+      }
+      else {
+        dispatch(handleError(err.response.data.message))
+      }
+    })
+  }
+
+};
+
+export
+const createRule = (id, type, event, func) => {
+
+  return dispatch => {
+    return axios.post("http://localhost:3001/rules",
+      {
+        sourceID: id,
+        sourceType: type,
+        event: event,
+        func: func
+      }).then((res) =>
+    {
+      console.log(res)
+    })
+  }
+};
+
+export function onEditDeviceFunction(func) {
+  return {
+    type: constants.DEVICE_FUNCTION_EDITED,
+    payload: func
+  }
+}
+
+
+export
+const editRule = (id, event, func) => {
+
+  return dispatch => {
+    return axios.patch("http://localhost:3001/rules/" + id,
+      {
+        event: event,
+        func: func
+      }).then((res) =>
+    {
+      console.log(res)
+    })
+  }
+};
+
+export function createNewRule(rule) {
+  return {
+    type: constants.NEW_DEVICE_RULE_CREATED,
+    payload: rule
+  }
+}
+
+export function editRuleFunc(func) {
+  return {
+    type: constants.DEVICE_RULE_FUNC_EDITED,
+    payload: func
+  }
+
+}
+
+export function editRuleEvent(func) {
+  return {
+    type: constants.DEVICE_RULE_EVENT_EDITED,
+    payload: func
+  }
+
+}
+
+export function selectCurrentRule(rule) {
+  return {
+    type: constants.CURRENT_DEVICE_RULE_SELECTED,
+    payload: rule
+  }
+}
+
+export function setRules(rules) {
+  return {
+    type: constants.DEVICE_RULES_RECEIVED,
+    payload: rules
+  }
+}
+
+export
+const getRules = (id) => {
+  return dispatch => {
+    axios.get("http://localhost:3001/rules?controlID=" + id +"&type=device").then((res) => {
+        console.log(res);
+        dispatch(setRules(res.data))
+
+      }
+    )
+  }
+};
+
+
 
 export function openConfirmModal() {
   return {

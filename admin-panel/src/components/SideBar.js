@@ -48,7 +48,8 @@ const SideBar = (props) => {
     <MuiThemeProvider>
   <div>
     <Paper style={style.paper}>
-      <Menu disableAutoFocus={true}>
+      <Menu disableAutoFocus={true}
+      >
         {props.items === undefined ? null :
           props.items.map((item,value) =>{
                 return <MenuItem

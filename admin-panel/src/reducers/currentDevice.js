@@ -17,10 +17,64 @@ export default function currentDevice(state = {confirmModalOpen: false,fail: fal
 
     }
 
+    case constants.DEVICE_FUNCTION_EDITED: {
+      return {
+        ...state,
+        deviceForm: {
+          ...state.controlForm,
+          propFunction: action.payload
+        }
+      }
+    }
+
     case constants.DEVICE_CONFIRM_MODAL_CLOSE: {
       return {
         ...state,
         confirmModalOpen: false
+      }
+    }
+
+    case constants.DEVICE_RULES_RECEIVED: {
+      return {
+        ...state,
+        rules: action.payload
+      }
+    }
+
+    case constants.NEW_DEVICE_RULE_CREATED: {
+      return {
+        ...state,
+        rules: [...state.rules, action.payload]
+
+      }
+    }
+
+    case constants.DEVICE_RULE_FUNC_EDITED: {
+      return {
+        ...state,
+        currentRuleForm: {
+          ...state.currentRuleForm,
+          func: action.payload
+        }
+      }
+    }
+
+    case constants.DEVICE_RULE_EVENT_EDITED: {
+      return {
+        ...state,
+        currentRuleForm: {
+          ...state.currentRuleForm,
+          event: action.payload
+        }
+      }
+    }
+
+
+    case constants.CURRENT_DEVICE_RULE_SELECTED: {
+      return {
+        ...state,
+        currentRule: action.payload,
+        currentRuleForm: action.payload
       }
     }
 

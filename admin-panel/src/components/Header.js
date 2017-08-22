@@ -19,7 +19,7 @@ const Header = (props) => {
         <AppBar title="Admin Panel"
                 iconElementRight={
                   <FlatButton label="Log Out"
-                              onTouchTap={() => {props.logOut().then(() => {props.history.replace('/login')})}}
+                              onTouchTap={() => {props.logOut().then(() => {this.props.history.replace('/login')})}}
                   />}
 
                 iconElementLeft={

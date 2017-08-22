@@ -113,7 +113,8 @@ class App extends Component {
 export default withRouter(connect(
   state => ({
     user: state.authorizedUser.user,
-    isAuth: state.authorizedUser.authorized
+    isAuth: state.authorizedUser.authorized,
+
   })
   ,
   dispatch => ({
