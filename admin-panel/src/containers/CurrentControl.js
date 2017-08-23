@@ -58,7 +58,9 @@ class CurrentControl extends Component {
   }
   componentWillUpdate(nextProps) {
     if ((nextProps.match.params.id !== this.props.match.params.id)) {
-      this.props.getCurrentControl(nextProps.match.params.id)
+      this.props.getCurrentControl(nextProps.match.params.id).then(() => {
+        this.props.getRules(this.props.currentControl.id);
+      })
     }
   }
 
@@ -198,7 +200,8 @@ class CurrentControl extends Component {
 
                                     }}
                         />
-                        <Menu selectedMenuItemStyle={{backgroundColor: '#CCCCCC'}}
+                        <Menu disableAutoFocus={true}
+                              selectedMenuItemStyle={{backgroundColor: '#CCCCCC'}}
                               value={this.props.controlInfo.currentRule}
                               onChange={(event, value) => {
                                 this.props.selectCurrentRule(value);

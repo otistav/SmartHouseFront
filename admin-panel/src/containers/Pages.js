@@ -59,7 +59,7 @@ class Pages extends Component {
         primary={true}
         onTouchTap={this.props.closeModal}/>,
       <FlatButton
-        label="Create user"
+        label="Create Page"
         disabled={this.props.isFetching}
         primary={true}
 
@@ -89,7 +89,7 @@ class Pages extends Component {
         </Dictionary>
 
         <Dialog
-        title="New User"
+        title="New Page"
         actions={actions}
         modal={true}
         open={this.props.flag}
