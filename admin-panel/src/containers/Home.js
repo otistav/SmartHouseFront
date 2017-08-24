@@ -5,6 +5,7 @@ import * as constants from '../constants/actions'
 import {logOut} from "../actions/authorizedUser"
 import {defineUser} from "../actions/authorizedUser"
 import {withRouter} from 'react-router-dom'
+import '../styles/homePage.css'
 import FontAwesome from 'react-fontawesome'
 import {Icon} from 'react-fa'
 import {UserHomePage} from "../components/UserHomePage"
@@ -32,10 +33,8 @@ class HomePage extends Component{
     // }
     const {match, location, history} = this.props;
     return(
-      <div>
-        WELCOME
-        <Icon spin name="spinner" />
-        <FontAwesome name="rocket"/>
+      <div className="home-page">
+        Welcome To Smart House!
       </div>
     )
   }
